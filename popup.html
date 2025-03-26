@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>OSINT Lookup Tool</title>
+  <style>
+    body {
+      width: 350px;
+      padding: 15px;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      text-align: center;
+    }
+    .title {
+      color: #2c3e50;
+      margin-bottom: 15px;
+    }
+    .instructions {
+      color: #7f8c8d;
+      font-size: 14px;
+      line-height: 1.4;
+      text-align: left;
+    }
+    .platforms {
+      margin-top: 15px;
+      padding: 10px;
+      background: #f7f9fc;
+      border-radius: 5px;
+      text-align: left;
+    }
+    .platforms h3 {
+      color: #2c3e50;
+      margin: 10px 0 5px 0;
+      font-size: 14px;
+    }
+    .platforms ul {
+      margin: 0 0 10px 0;
+      padding-left: 20px;
+      font-size: 13px;
+      color: #34495e;
+    }
+    .platform-type {
+      border-bottom: 1px solid #eee;
+      padding-bottom: 5px;
+      margin-bottom: 10px;
+    }
+    .platform-type:last-child {
+      border-bottom: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 class="title">OSINT Lookup Tool</h2>
+    <div class="instructions">
+      To use this extension:
+      <ol>
+        <li>Highlight an IP address, SHA hash, or domain name on a webpage</li>
+        <li>Right-click the selection</li>
+        <li>Click "Check on OSINT Platforms"</li>
+      </ol>
+    </div>
+    <div class="platforms">
+      <div class="platform-type">
+        <h3>IP Address Platforms:</h3>
+        <ul>
+          <li>AbuseIPDB</li>
+          <li>VirusTotal</li>
+          <li>IPVoid</li>
+          <li>Shodan</li>
+          <li>Censys</li>
+          <li>GreyNoise</li>
+          <li>ThreatCrowd</li>
+          <li>AlienVault OTX</li>
+          <li>IBM X-Force Exchange</li>
+          <li>Talos Intelligence</li>
+          <li>URLScan.io</li>
+        </ul>
+      </div>
+      <div class="platform-type">
+        <h3>SHA Hash Platforms:</h3>
+        <ul>
+          <li>VirusTotal</li>
+          <li>Malware Bazaar</li>
+          <li>AlienVault OTX</li>
+          <li>IBM X-Force Exchange</li>
+          <li>Hybrid Analysis</li>
+          <li>ThreatMiner</li>
+        </ul>
+      </div>
+      <div class="platform-type">
+        <h3>Domain Platforms:</h3>
+        <ul>
+          <li>VirusTotal</li>
+          <li>URLScan.io</li>
+          <li>Censys</li>
+          <li>ThreatCrowd</li>
+          <li>AlienVault OTX</li>
+          <li>IBM X-Force Exchange</li>
+          <li>Talos Intelligence</li>
+          <li>SecurityTrails</li>
+          <li>DomainTools</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
