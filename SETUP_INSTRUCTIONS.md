@@ -60,3 +60,14 @@ For future changes, you'll need to:
 4. Approve and merge the PR as the repository owner
 
 This process ensures all changes are properly reviewed before being merged to the main branch.
+
+## Automatic Branch Deletion
+
+A GitHub Actions workflow has been set up to automatically delete branches after they've been merged:
+
+- When a pull request is closed and merged, the source branch will be automatically deleted
+- The main branch and any branch named 'develop' are protected from automatic deletion
+- This helps keep your repository clean by removing branches that are no longer needed
+- You can still manually restore deleted branches if needed through GitHub's interface
+
+This automation works with the VS Code git extension, so you don't need to manually clean up branches after merging.
