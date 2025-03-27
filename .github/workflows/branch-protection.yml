@@ -1,0 +1,54 @@
+name: Branch Protection
+
+on:
+  # Run on repository creation and when workflow file changes
+  push:
+    paths:
+      - '.github/workflows/branch-protection.yml'
+  workflow_dispatch:
+  
+jobs:
+  configure-branch-protection:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name: Configure Branch Protection
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            
+            // Get default branch
+            const { data: repository } = await github.rest.repos.get({
+              owner,
+              repo
+            });
+            
+            const branch = repository.default_branch;
+            
+            // Set branch protection rules
+            await github.rest.repos.updateBranchProtection({
+              owner,
+              repo,
+              branch,
+              required_status_checks: {
+                strict: true,
+                contexts: []
+              },
+              enforce_admins: false,
+              required_pull_request_reviews: {
+                required_approving_review_count: 1,
+                dismiss_stale_reviews: true,
+                require_code_owner_reviews: true
+              },
+              restrictions: {
+                users: ['staycold666'],
+                teams: []
+              }
+            });
+            
+            console.log(`Branch protection rules set for ${branch}`);
