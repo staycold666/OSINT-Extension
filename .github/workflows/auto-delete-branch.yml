@@ -9,9 +9,19 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
     steps:
-      - name: Delete branch
-        uses: SvanBoxel/delete-merged-branch@main
+      - name: Delete merged branch
+        run: |
+          # Extract branch name from the GITHUB_REF
+          BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
+          
+          # Make sure we're not trying to delete protected branches
+          if [[ "$BRANCH_NAME" != "main" && "$BRANCH_NAME" != "develop" && "$BRANCH_NAME" != "master" ]]; then
+            echo "Deleting branch $BRANCH_NAME"
+            gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
+            gh api -X DELETE repos/${{ github.repository }}/git/refs/heads/$BRANCH_NAME
+            echo "Branch $BRANCH_NAME deleted successfully"
+          else
+            echo "Branch $BRANCH_NAME is protected and will not be deleted"
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          exclude: 'main,develop'
