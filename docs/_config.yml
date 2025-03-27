@@ -1,0 +1,5 @@
+title: OSINT Lookup Chrome Extension
+description: A Chrome extension for quickly checking IP addresses, SHA hashes, and domain names against multiple OSINT platforms.
+theme: jekyll-theme-cayman
+url: https://staycold666.github.io/OSINT-Extension
+baseurl: /OSINT-Extension
