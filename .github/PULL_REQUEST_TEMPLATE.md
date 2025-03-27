@@ -1,27 +1,27 @@
 ## Description
 <!-- Provide a brief description of the changes in this PR -->
 
-## Related Issue
+## Related Issue (if applicable)
 <!-- Link to the issue that this PR addresses (if applicable) -->
 Fixes #
 
-## Type of Change
+## Type of Change (check all that apply)
 <!-- What types of changes does your code introduce? Put an 'x' in all boxes that apply: -->
 - [ ] Bug fix (non-breaking change that fixes an issue)
 - [ ] New feature (non-breaking change that adds functionality)
 - [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
 - [ ] Documentation update
 
-## Security Considerations
+## Security Considerations (if applicable)
 <!-- Describe any security considerations or implications of this change -->
 
-## Testing Performed
+## Testing Performed (check all that apply)
 <!-- Describe the testing you have performed -->
 - [ ] Manual testing in Chrome
 - [ ] Verified all existing features still work correctly
 - [ ] Tested with different types of indicators (IPs, hashes, domains)
 
-## Checklist
+## Checklist (check all that apply)
 <!-- Put an 'x' in all boxes that apply: -->
 - [ ] My code follows the code style of this project
 - [ ] I have updated the documentation accordingly (if needed)
