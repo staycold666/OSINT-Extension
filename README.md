@@ -1,5 +1,8 @@
 # OSINT Lookup Chrome Extension
 
+![Threat Hunting Automation Tool](./icons/icon128.png)
+
+/icon128.png
 A Chrome extension that allows users to quickly check IP addresses, SHA hashes, and domain names against multiple OSINT (Open Source Intelligence) platforms. Simply highlight the text on any webpage, right-click, and instantly check its reputation across popular security platforms.
 
 ## Features
