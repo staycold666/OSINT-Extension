@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "OSINT Lookup Tool",
-  "version": "1.2.0",
+  "version": "1.2.0.0",
   "description": "Quickly check IP addresses, SHA hashes, and domains against popular OSINT platforms",
   "permissions": [
     "contextMenus",
