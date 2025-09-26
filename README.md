@@ -11,11 +11,12 @@ A Chrome extension that allows users to quickly check IP addresses, SHA hashes, 
 - Automatically detects the type of indicator and uses the appropriate OSINT platforms
 - Validates format before processing
 - Automatically opens lookups in multiple OSINT platforms based on the indicator type:
-  - **IP Addresses**: AbuseIPDB, VirusTotal, IPVoid, Shodan, Censys, GreyNoise, AlienVault OTX, IBM X-Force Exchange, Talos Intelligence, URLScan.io
+  - **IP Addresses** (11 platforms): AbuseIPDB, VirusTotal, IPVoid, Shodan, Censys, GreyNoise, AlienVault OTX, IBM X-Force Exchange, Talos Intelligence, URLScan.io, IPQualityScore
   - **SHA Hashes**: VirusTotal, Malware Bazaar, AlienVault OTX, IBM X-Force Exchange, Hybrid Analysis, ThreatMiner
   - **Domains**: VirusTotal, URLScan.io, Censys, AlienVault OTX, IBM X-Force Exchange, Talos Intelligence, SecurityTrails, DomainTools
 - Simple right-click context menu integration
 - Clean and intuitive popup interface
+- **Chrome Tab Groups integration**: OSINT lookup tabs are automatically organized into color-coded groups for better tab management
 
 ## Usage
 
@@ -33,6 +34,7 @@ A Chrome extension that allows users to quickly check IP addresses, SHA hashes, 
   - `contextMenus`: For the right-click menu functionality
   - `activeTab`: To interact with the current tab
   - `scripting`: To execute scripts for showing alerts
+  - `tabGroups`: For organizing OSINT tabs into groups (Chrome 89+)
 
 ## Contributing
 
