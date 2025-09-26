@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSINT Extension Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .test-item {
+            margin: 10px 0;
+            padding: 8px;
+            background-color: #fff;
+            border-radius: 3px;
+            border-left: 4px solid #007bff;
+        }
+        .ip { border-left-color: #007bff; }
+        .hash { border-left-color: #dc3545; }
+        .domain { border-left-color: #28a745; }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>OSINT Extension Test Page</h1>
+    <p>Right-click on any of the values below and select "Check on OSINT Platforms" to test the extension.</p>
+    
+    <div class="test-section">
+        <h2>IP Addresses (Should create BLUE tab group)</h2>
+        <div class="test-item ip">
+            <strong>IPv4:</strong> <code>8.8.8.8</code>
+        </div>
+        <div class="test-item ip">
+            <strong>IPv4:</strong> <code>1.1.1.1</code>
+        </div>
+        <div class="test-item ip">
+            <strong>IPv6:</strong> <code>2001:4860:4860::8888</code>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>SHA Hashes (Should create RED tab group)</h2>
+        <div class="test-item hash">
+            <strong>MD5:</strong> <code>5d41402abc4b2a76b9719d911017c592</code>
+        </div>
+        <div class="test-item hash">
+            <strong>SHA1:</strong> <code>aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d</code>
+        </div>
+        <div class="test-item hash">
+            <strong>SHA256:</strong> <code>e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</code>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Domain Names (Should create GREEN tab group)</h2>
+        <div class="test-item domain">
+            <strong>Domain:</strong> <code>google.com</code>
+        </div>
+        <div class="test-item domain">
+            <strong>Domain:</strong> <code>example.org</code>
+        </div>
+        <div class="test-item domain">
+            <strong>Domain:</strong> <code>malicious-site.net</code>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Expected Behavior</h2>
+        <ul>
+            <li><strong>IP Addresses:</strong> Should create a BLUE tab group titled "OSINT - IP Lookup" with 11 tabs (AbuseIPDB, VirusTotal, IPVoid, etc.)</li>
+            <li><strong>SHA Hashes:</strong> Should create a RED tab group titled "OSINT - HASH Lookup" with 7 tabs (VirusTotal, Malware Bazaar, etc.)</li>
+            <li><strong>Domain Names:</strong> Should create a GREEN tab group titled "OSINT - DOMAIN Lookup" with 8 tabs (VirusTotal, URLScan, etc.)</li>
+            <li><strong>All groups:</strong> Should start in collapsed state</li>
+            <li><strong>Fallback:</strong> If Tab Groups API is not available, should open tabs normally without grouping</li>
+        </ul>
+    </div>
+
+    <div class="test-section">
+        <h2>Installation Instructions</h2>
+        <ol>
+            <li>Open Chrome and go to <code>chrome://extensions/</code></li>
+            <li>Enable "Developer mode" (toggle in top right)</li>
+            <li>Click "Load unpacked"</li>
+            <li>Select the OSINT-Extension folder</li>
+            <li>The extension should now appear in your extensions list</li>
+            <li>Return to this page and test the right-click functionality</li>
+        </ol>
+    </div>
+</body>
+</html>
