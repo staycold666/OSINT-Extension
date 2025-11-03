@@ -147,12 +147,18 @@ const DOMAIN_OSINT_PLATFORMS = {
   DomainTools: 'https://whois.domaintools.com/'
 };
 
-// Create context menu item when extension is installed
+// Create context menu items when extension is installed
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
     id: 'checkOSINT',
     title: 'Check on OSINT Platforms',
     contexts: ['selection']
+  });
+  
+  chrome.contextMenus.create({
+    id: 'checkAnyRunSafe',
+    title: 'Check with any.run Safebrowsing',
+    contexts: ['link', 'selection']
   });
 });
 
@@ -197,6 +203,22 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     } finally {
       // Always reset the execution flag
       isExecuting = false;
+    }
+  } else if (info.menuItemId === 'checkAnyRunSafe') {
+    // Handle any.run Safebrowsing
+    // Prefer linkUrl (actual href) over selectionText (display text)
+    const urlToCheck = info.linkUrl || info.selectionText?.trim();
+    
+    if (urlToCheck) {
+      try {
+        // Open any.run Safebrowsing with the selected URL
+        await chrome.tabs.create({
+          url: `https://app.any.run/safe/${urlToCheck}`,
+          active: true
+        });
+      } catch (error) {
+        console.error('Failed to open any.run Safebrowsing:', error);
+      }
     }
   }
 });
