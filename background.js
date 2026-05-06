@@ -19,9 +19,9 @@ const sha256Regex = /^[a-fA-F0-9]{64}$/;
 const sha512Regex = /^[a-fA-F0-9]{128}$/;
 const md5Regex = /^[a-fA-F0-9]{32}$/;
 
-// Domain name regex - simplified to prevent ReDoS while maintaining validation
-// Very permissive pattern: alphanumeric with hyphens and dots
-const domainRegex = /^[a-z0-9][a-z0-9.-]+[a-z0-9]$/i;
+// Domain name regex - require at least one dot, validate per-label.
+// Each label: starts/ends alphanumeric, optional internal hyphens, ≤63 chars.
+const domainRegex = /^([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+$/i;
 
 // Check if Tab Groups API is available
 function isTabGroupsSupported() {
@@ -58,7 +58,7 @@ async function createTabsWithGroups(inputType, selectedText, platforms) {
   for (const [platform, baseUrl] of Object.entries(platforms)) {
     try {
       const tab = await chrome.tabs.create({
-        url: `${baseUrl}${selectedText}`,
+        url: `${baseUrl}${encodeURIComponent(selectedText)}`,
         active: false
       });
       tabIds.push(tab.id);
@@ -117,7 +117,7 @@ async function createTabsLegacy(selectedText, platforms) {
   
   for (const [, baseUrl] of Object.entries(platforms)) {
     const tab = await chrome.tabs.create({
-      url: `${baseUrl}${selectedText}`,
+      url: `${baseUrl}${encodeURIComponent(selectedText)}`,
       active: false
     });
     tabIds.push(tab.id);
@@ -148,8 +148,7 @@ const HASH_OSINT_PLATFORMS = {
   AlienVaultOTX: 'https://otx.alienvault.com/indicator/file/',
   IBMXForce: 'https://exchange.xforce.ibmcloud.com/malware/',
   Hybrid_Analysis: 'https://www.hybrid-analysis.com/search?query=',
-  ThreatMiner: 'https://www.threatminer.org/sample.php?q=',
-  MalwareBazaar: 'https://bazaar.abuse.ch/sample/'
+  ThreatMiner: 'https://www.threatminer.org/sample.php?q='
 };
 
 // OSINT platform URLs for domains
