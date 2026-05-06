@@ -1,9 +1,17 @@
 // Regular expressions for validation
 // Simplified IPv4 regex - avoids nested quantifiers to prevent ReDoS
 const ipv4Regex = /^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])$/;
-// Simplified IPv6 regex - basic validation to prevent ReDoS
-// Very permissive pattern that avoids complex alternations and quantifiers
-const ipv6Regex = /^[0-9a-fA-F:]+$/;
+// IPv6 validator using URL parsing - avoids ReDoS while rejecting structural nonsense
+function isValidIPv6(value) {
+  try {
+    const url = new URL(`http://[${value}]`);
+    // Hostname will be bracketed; strip brackets and verify round-trip
+    return url.hostname === `[${value.toLowerCase()}]` ||
+           url.hostname.slice(1, -1) === value.toLowerCase();
+  } catch (_e) {
+    return false;
+  }
+}
 
 // SHA hash regex patterns (supports SHA-1, SHA-256, SHA-512, and others)
 const sha1Regex = /^[a-fA-F0-9]{40}$/;
@@ -183,7 +191,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     }
     
     isExecuting = true;
-    const selectedText = info.selectionText.trim();
+    const selectedText = (info.selectionText ?? '').trim();
     
     try {
       // Determine the type of the selected text
@@ -216,13 +224,27 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   } else if (info.menuItemId === 'checkAnyRunSafe') {
     // Handle any.run Safebrowsing
     // Prefer linkUrl (actual href) over selectionText (display text)
-    const urlToCheck = info.linkUrl || info.selectionText?.trim();
-    
-    if (urlToCheck) {
+    const rawUrl = info.linkUrl || info.selectionText?.trim();
+
+    if (rawUrl) {
+      // Validate: must parse as a valid URL with http or https scheme
+      let parsedUrl;
       try {
-        // Open any.run Safebrowsing with the selected URL
+        parsedUrl = new URL(rawUrl);
+      } catch (_e) {
+        console.error('checkAnyRunSafe: invalid URL, aborting:', rawUrl);
+        return;
+      }
+
+      if (parsedUrl.protocol !== 'http:' && parsedUrl.protocol !== 'https:') {
+        console.error('checkAnyRunSafe: non-http(s) scheme rejected:', parsedUrl.protocol);
+        return;
+      }
+
+      try {
+        // URL-encode the validated value before embedding in the target path
         await chrome.tabs.create({
-          url: `https://app.any.run/safe/${urlToCheck}`,
+          url: `https://app.any.run/safe/${encodeURIComponent(rawUrl)}`,
           active: true
         });
       } catch (error) {
@@ -247,7 +269,7 @@ function determineInputType(text) {
 
 // Function to validate IP address format
 function isValidIP(ip) {
-  return ipv4Regex.test(ip) || ipv6Regex.test(ip);
+  return ipv4Regex.test(ip) || isValidIPv6(ip);
 }
 
 // Function to validate hash format
